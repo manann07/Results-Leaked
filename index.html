@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Winner Predictor - 3D Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        /* Base Styles and CSS Variables */
+        :root {
+            --primary-color: #1e0b4b;
+            --secondary-color: #3100b3;
+            --accent-color: #ff6b00;
+            --text-color: #e0e0ff;
+            --background-color: #050023;
+            --card-bg: rgba(30, 11, 75, 0.7);
+            --header-height: 70px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a, #1e1e1e);
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-image: url('https://th.bing.com/th/id/OIP.KNPeN4qJAK_rFAabv5lucgHaPP?w=115&h=192&c=7&r=0&o=5&dpr=1.3&pid=1.7'), 
+                              url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDEwfHxiYWNrZ3JvdW5kfGVufDB8fHx8MTY4MjY0NzYyNQ&ixlib=rb-4.0.3&q=80&w=1080');
+            background-size: cover;
+            background-attachment: fixed;}
+
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+/* Root Variables */
+:root {
+    --header-height: 70px;
+    --accent-color: #ff6b00;
+    --warning-color: #ff0000;
+    --background-blur: rgba(15, 5, 35, 0.9);
+}
+
+/* ✅ Header and Navigation */
+header {
+    height: var(--header-height);
+    background-color: var(--background-blur);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Logo */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 0 15px var(--warning-color);
+    transition: transform 0.3s ease-in-out;
+}
+
+.logo i {
+    margin-right: 10px;
+    color: var(--accent-color);
+}
+
+/* ✅ Navigation Menu */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 1.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    transition: color 0.3s ease-in-out;
+}
+
+/* ✅ Mobile Menu */
+.mobile-menu-btn {
+    display: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* ✅ Mobile Responsive Navigation */
+@media screen and (max-width: 768px) {
+    header {
+        padding: 0 1.5rem;
+    }
+    
+    nav ul {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: var(--header-height);
+        right: 0;
+        width: 250px;
+        background: var(--background-blur);
+        backdrop-filter: blur(12px);
+        border-radius: 10px;
+        overflow: hidden;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .mobile-menu.active {
+        transform: translateX(0);
+    }
+
+    .mobile-menu ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .mobile-menu ul li {
+        text-align: center;
+        padding: 12px 0;
+    }
+
+    .mobile-menu ul li a {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: white;
+        display: block;
+        padding: 10px;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .mobile-menu ul li a:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* ✅ Responsive Text Alignment Fix */
+.hero-content {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+/* ✅ Responsive Image Section */
+.image-container {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.blurred-image {
+    width: 100%;
+    height: auto;
+    filter: blur(5px);
+}
+
+.unlock-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.unlock-button:hover {
+    background: var(--warning-color);
+}
+
+/* ✅ Hero Section */
+.hero {
+    height: 100vh;
+    padding-top: var(--header-height);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* ✅ Hero Content */
+.hero-content {
+    max-width: 600px;
+    padding: 0 2rem;
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+    color: red;
+    margin: 10px;;
+}
+
+/* ✅ Hero Headline */
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 0 15px rgba(255, 107, 0, 0.5);
+}
+
+/* ✅ Hero Paragraph */
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* ✅ CTA Button */
+.cta-button {
+    padding: 10px;
+    background: blue;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+    display: inline-block;
+    text-align: center;
+}
+
+/* ✅ CTA Button Hover Effect */
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(255, 107, 0, 0.7);
+}
+
+/* ✅ CTA Button Animation */
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, blue, );
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.cta-button:hover::before {
+    opacity: 1;
+}
+
+/* ✅ Background Canvas Animation */
+.canvas-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60%;
+    height: 100%;
+}
+
+/* ✅ Responsive Design */
+@media screen and (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .canvas-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero {
+        height: auto;
+        padding: 80px 20px;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        font-size: 1rem;
+        padding: 0.8rem 2rem;
+    }
+
+    .canvas-container {
+        display: none; /* Hide background on mobile */
+    }
+}
+
+/* ✅ Features Section */
+.features {
+    padding: 5rem 2rem;
+    background-color: rgba(5, 0, 35, 0.85);
+    position: relative;
+    text-align: center;
+}
+
+/* ✅ Section Title */
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    color: white;
+    text-shadow: 0 0 15px rgba(255, 107, 0, 0.7);
+}
+
+/* ✅ Feature Cards Grid */
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ✅ Feature Card Design */
+.feature-card {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.05));
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ Hover Effect */
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(255, 107, 0, 0.3);
+}
+
+/* ✅ Feature Icon */
+.feature-card i {
+    font-size: 3.2rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* ✅ Hover Effect on Icon */
+.feature-card:hover i {
+    transform: scale(1.3);
+    color: #ff9d00;
+}
+
+/* ✅ Feature Heading */
+.feature-card h3 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 107, 0, 0.5);
+}
+
+/* ✅ Feature Card Background Glow */
+.feature-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.2) 10%, transparent 50%);
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+/* ✅ Hover Glow Effect */
+.feature-card:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* ✅ Responsive Fixes */
+@media screen and (max-width: 1024px) {
+    .section-title {
+        font-size: 2.4rem;
+    }
+
+    .feature-cards {
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+
+    .feature-card {
+        padding: 1.2rem;
+    }
+
+    .feature-card i {
+        font-size: 2.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.4rem;
+    }
+}
+
+/* ✅ Predictions Section */
+.predictions {
+    padding: 5rem 2rem;
+    background-color: rgba(15, 5, 35, 0.85);
+    position: relative;
+}
+
+/* ✅ Prediction Container */
+.prediction-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ✅ Prediction Header */
+.prediction-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* ✅ Prediction Cards Grid */
+.prediction-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* ✅ Prediction Card */
+.prediction-card {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(255, 107, 0, 0.05));
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ Hover Effect */
+.prediction-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(255, 107, 0, 0.3);
+}
+
+/* ✅ Prediction Image */
+.prediction-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* ✅ Overlay on Image */
+.prediction-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, rgba(15, 5, 35, 0.8), transparent);
+}
+
+/* ✅ Prediction Content */
+.prediction-content {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+/* ✅ Prediction Date */
+.prediction-date {
+    color: #a0a0cc;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ✅ Prediction Match Title */
+.prediction-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 107, 0, 0.5);
+}
+
+/* ✅ Prediction Stats */
+.prediction-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+/* ✅ Stat Box */
+.stat {
+    text-align: center;
+}
+
+/* ✅ Percentage Value */
+.stat-value {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+}
+
+/* ✅ Team Name */
+.stat-label {
+    font-size: 1rem;
+    color: #a0a0cc;
+}
+
+/* ✅ Footer */
+footer {
+    background-color: rgba(5, 0, 20, 0.9);
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+/* ✅ Footer Content Grid */
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* ✅ Footer Logo */
+.footer-logo {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+}
+
+/* ✅ Footer Links */
+.footer-links h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #d0d0ff;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+/* ✅ Social Media Icons */
+.social-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.4rem;
+}
+
+/* ✅ Hover Effect */
+.social-links a:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-5px);
+}
+
+/* ✅ Responsive Fixes */
+@media screen and (max-width: 1024px) {
+    .section-title {
+        font-size: 2.4rem;
+    }
+
+    .prediction-cards {
+        gap: 1.5rem;
+    }
+
+    .prediction-card {
+        padding: 1.5rem;
+    }
+
+    .footer-links h3 {
+        font-size: 1.2rem;
+    }
+
+    .footer-links a {
+        font-size: 1rem;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+
+    .prediction-card {
+        padding: 1.2rem;
+    }
+
+    .prediction-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .prediction-date {
+        font-size: 0.9rem;
+    }
+
+    .stat-value {
+        font-size: 1.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-links h3 {
+        font-size: 1.2rem;
+    }
+
+    .footer-links a {
+        font-size: 0.95rem;
+    }
+
+    .social-links a {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+    }
+}
+/* ✅ Payment Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Modal Content */
+.modal-content {
+    background: linear-gradient(135deg, rgba(30, 11, 75, 0.9), rgba(15, 5, 35, 0.85));
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+/* ✅ Open Animation */
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ✅ Close Button */
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #d0d0ff;
+    transition: color 0.3s ease-in-out;
+}
+
+.close-modal:hover {
+    color: var(--accent-color);
+}
+
+/* ✅ Form Styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #d0d0ff;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease-in-out;
+    font-size: 1rem;
+}
+
+/* ✅ Input Field Focus Effect */
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 12px rgba(255, 107, 0, 0.3);
+}
+
+/* ✅ Responsive Input Fields */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* ✅ Mobile Optimizations */
+@media (max-width: 768px) {
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .canvas-container {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    /* ✅ Mobile Navbar */
+    nav ul {
+        position: fixed;
+        flex-direction: column;
+        background-color: rgba(15, 5, 35, 0.95);
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease-in-out;
+        backdrop-filter: blur(10px);
+    }
+
+    nav ul.active {
+        height: calc(100vh - var(--header-height));
+    }
+
+    nav ul li {
+        margin: 1.5rem 0;
+        text-align: center;
+    }
+
+    /* ✅ Modal on Small Screens */
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+}
+
+/* ✅ Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+<!-- Header & Navigation -->
+<header>
+    <div class="logo">
+        <i class="fas fa-exclamation-triangle"></i> <!-- Warning Icon -->
+        <span style="font-size: x-large;">  !  IPL Results Leaked ! </span>
+    </div>
+    
+    <nav>
+        <ul>
+            <li><a href="#breaking-news">Breaking News</a></li>
+            <li><a href="#predictions">Today's Leaked Results</a></li>
+            <li><a href="#access">Get Instant Access</a></li>
+        </ul>
+    </nav>
+
+
+
+    <nav class="mobile-menu">
+        <ul>
+            <li><a href="#breaking-news" onclick="closeMenu()">Breaking News</a></li>
+            <li><a href="#predictions" onclick="closeMenu()">Today's Leaked Results</a></li>
+            <li><a href="#access" onclick="closeMenu()">Get Instant Access</a></li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+function toggleMenu() {
+    let menu = document.querySelector('.mobile-menu');
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+}
+
+function closeMenu() {
+    document.querySelector('.mobile-menu').style.display = 'none';
+}
+</script>
+
+
+<!-- Hero Section -->
+<section class="hero">
+
+    <div class="hero-content">
+        <h1> Latest News IPL Results Are Leaked 😱</h1>
+        <p>🚨 WARNING! This information is highly confidential.</p>
+        <h2 style=" padding: 5px;">  Only limited users can access today’s match winner.</h2>
+        
+        <button style="margin: 20px; padding: 15px;" class="cta-button "><form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QBhdK4eIrYgvFI" async> </script> </form></button>
+    </a>
+    </div>
+    <div class="canvas-container" id="stadium-model"></div>
+    <div style="background: #222; color: white; padding: 15px; border-radius: 10px; text-align: center; margin-top: 10px;">
+        <h3 style="color: #ffcc00;">⭐ 4.9 Rating Based on 5,000+ Reviews</h3>
+        <p>"Bro, last match ki prediction 100% sahi thi! Trustworthy site!" – <b>Amit, Delhi</b></p>
+        <p>"Pehli baar trusted website mili jo real predictions deti hai!" – <b>Rahul, Mumbai</b></p>
+    </div>
+    
+    
+</section>
+
+<script>
+function showPayment() {
+    alert("Redirecting to secure payment page...");
+    // Actual payment integration link will be added here later
+}
+</script>
+
+<!-- Predictions Section -->
+<section class="predictions" id="predictions">
+    
+    <div class="prediction-container">
+        <div class="prediction-header">
+            <h2 class="section-title">😱 LEAKED MATCH WINNERS </h2>
+            <p class="section-subtitle">⚠️ Highly Confidential Data  Limited Users Only!</p>
+        </div>
+
+        <div class="prediction-cards">
+            <div id="slot-container" style="background: #ff0000; color: white; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; margin-top: 10px;">
+                ⚡ Only <span id="slot-count">5</span> Slots Left for This Prediction!
+            </div>
+            
+            <script>
+                let slotsLeft = 5; // Initial Slots
+            
+                function decreaseSlots() {
+                    if (slotsLeft > 0) {
+                        slotsLeft--; 
+                        document.getElementById("slot-count").innerText = slotsLeft;
+            
+                        if (slotsLeft === 0) {
+                            document.getElementById("slot-container").innerHTML = "⚠ Hurry! Next Prediction Coming Soon...";
+                        }
+                    }
+                }
+            
+                // ✅ Auto decrease every 10 seconds (Adjust timing as needed)
+                setInterval(decreaseSlots, 10000);
+            </script>
+<h1 style="text-align: center; background: #ffeb99; color: #333; padding: 8px 0; border-radius: 3px; font-size: 24px; font-weight: bold; width:100%; margin: 20px auto; border: 2px solid #ffcc00;">
+    Today’s Result
+</h1>
+
+
+           
+            <div class="prediction-card blurred">
+                <div style="text-align: center; background: #f0f8ff; color: #222; padding: 5px 10px; border-radius: 3px; font-size: 16px; font-weight: bold; width: fit-content; margin: 10px auto; border: 1px solid #87ceeb;">
+    27 March | Thursday
+</div>
+
+                <div class="prediction-image" style="background-image: url('https://imgs.search.brave.com/BEhpZuzczKpFYT2dAwl_V5lhNiPSxvvQfVJt0wkw06U/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/amFncmFuam9zaC5j/b20vaW1hZ2VzLzIw/MjQvTWF5Lzc1MjAy/NC9MU0ctdnMtU1JI/LUhlYWQud2VicA')"></div>
+                <div class="prediction-content">
+                    <h3>LSG VS SRH</h3>
+                    <div class="prediction-stats">
+                        <div class="stat">
+                            <div class="stat-value">WIN ?</div>
+                            <div class="stat-label">Mumbai</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">WIN ?</div>
+                            <div class="stat-label">Chennai</div>
+                        </div>
+                    </div>
+                </div>
+                <form style="margin-left: 30px;"><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QBhdK4eIrYgvFI" async> </script> </form>
+            </div>
+            <div style="text-align: center; background: #d9edf7; color: #333; padding: 8px 0; border-radius: 3px; font-size: 22px; font-weight: bold; width:100%; margin: 20px auto; border: 2px solid #99cfe0;">
+                Previous Results
+            </div>
+            
+
+            <div class="prediction-card blurred">
+                <div class="prediction-image" style="background-image: url('https://imgs.search.brave.com/gjYnfl8KrrR0DHfds4RAWpRxGswcQN2pprW7IYWmTy0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/amFncmFuam9zaC5j/b20vaW1hZ2VzLzIw/MjQvQXByaWwvMTY0/MjAyNC9LS1ItdnMt/UlItVG9kYXkud2Vi/cA')"></div>
+                <div class="prediction-content">
+                    <div style="text-align: center; background: #f0f8ff; color: #222; padding: 5px 10px; border-radius: 3px; font-size: 16px; font-weight: bold; width: fit-content; margin: 10px auto; border: 1px solid #87ceeb;">
+                        26 March | Wednesday
+                    </div>
+                    <h3>KKR VS RR </h3>
+                    <div class="prediction-stats">
+                        <div class="stat">
+                            <div class="stat-value">WIN </div>
+                            <div class="stat-label">KOLKATA</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">--</div>
+                            <div class="stat-label">RAJASTHAN</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="prediction-card blurred">
+                <div class="prediction-image" style="background-image: url('https://imgs.search.brave.com/nvHrxsOGQkiJ6Gt1QccaWDTYw6TrNaahAtlRmjGMWq0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/amFncmFuam9zaC5j/b20vaW1hZ2VzLzIw/MjQvQXByaWwvNDQy/MDI0L2d0LWhlYWQt/b24ud2VicA')"></div>
+                <div class="prediction-content">
+                    <div style="text-align: center; background: #f0f8ff; color: #222; padding: 5px 10px; border-radius: 3px; font-size: 16px; font-weight: bold; width: fit-content; margin: 10px auto; border: 1px solid #87ceeb;">
+                        25 March | Tuesday
+                    </div>
+                    <h3>GT VS PK</h3>
+                    <div class="prediction-stats">
+                        <div class="stat">
+                            <div class="stat-value">WIN </div>
+                            <div class="stat-label">PUNJAB</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">--</div>
+                            <div class="stat-label">GUJARAT</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<div style="background: #ffcc00; color: #000; padding: 10px; text-align: center; font-weight: bold; font-size: 18px; border-radius: 5px;">
+    ⚠ Beware of Fake Predictions! Only Our Website Provides Real Leaked Results.
+</div>
+
+<div style="background: #1e1e1e; color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">
+    ✅ Verified & Trusted by <span style="color: #ffcc00;">10,000+</span> Users!
+</div>
+
+
+<script>
+function showPayment() {
+    alert("Redirecting to secure payment page...");
+    // Yaha payment gateway ka link add hoga
+}
+</script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#predictions">Predictions</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> support@iplpredictor.com</li>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Mumbai, India</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+<!-- Payment Modal -->
+<div class="modal" id="payment-modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2>Complete Your Payment</h2>
+        <p>💰 Pay ₹500 securely via Paytm</p>
+        <button class="cta-button" onclick="startPaytmPayment()">Proceed with Paytm</button>
+    </div>
+</div>
+
+<script>
+function startPaytmPayment() {
+    alert("Redirecting to Paytm Secure Gateway...");
+    // Yaha Paytm Payment Gateway ka integration link add hoga
+}
+
+function closeModal() {
+    document.getElementById("payment-modal").style.display = "none";
+}
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js Config
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+    // ✅ Mobile Menu Toggle (Fixed)
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+    });
+
+    // ✅ Payment Modal Functionality (Fixed)
+    const paymentModal = document.getElementById('payment-modal');
+    const closeModal = document.querySelector('.close-modal');
+    const unlockButtons = document.querySelectorAll('.unlock-button');
+
+    unlockButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            paymentModal.style.display = 'block';
+        });
+    });
+
+    closeModal.addEventListener('click', () => {
+        paymentModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === paymentModal) {
+            paymentModal.style.display = 'none';
+        }
+    });
+
+    // ✅ Paytm Payment Trigger
+    function startPaytmPayment() {
+        alert("Redirecting to Paytm Secure Gateway...");
+        // Yaha Paytm Payment Gateway ka integration link add hoga
+    }
+</script>
+
+</body>
+</html> 
