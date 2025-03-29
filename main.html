@@ -936,6 +936,14 @@ footer {
     </nav>
 
 
+
+    <nav class="mobile-menu">
+        <ul>
+            <li><a href="#breaking-news" onclick="closeMenu()">Breaking News</a></li>
+            <li><a href="#predictions" onclick="closeMenu()">Today's Leaked Results</a></li>
+            <li><a href="#access" onclick="closeMenu()">Get Instant Access</a></li>
+        </ul>
+    </nav>
 </header>
 
 <script>
@@ -949,36 +957,19 @@ function closeMenu() {
 }
 </script>
 
-<div class="prediction-card blurred" style="margin: 20px;">
-    <div style="text-align: center; background: #f0f8ff; color: #222; padding: 5px 10px; border-radius: 3px; font-size: 16px; font-weight: bold; width: fit-content; margin: 10px auto; border: 1px solid #87ceeb;">
-29 March |Saturday
-</div>
-
-    <div class="prediction-image" style="background-image: url('https://imgs.search.brave.com/8ugveHvrQsOso6g86Lr3jnPdbHWy5Dq5fB1WprWYxZQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXVtYmFpaW5kaWFu/cy5jb20vc3RhdGlj/LWFzc2V0cy93YWYt/aW1hZ2VzLzhkLzNk/LzZlLzE2LTkvNTky/LTQ0NC90U1ZjMGh3/MndPLnBuZw')"></div>
-    <div class="prediction-content">
-        <h3>GT VS MI</h3>
-        <div class="prediction-stats">
-            <div class="stat">
-                <div class="stat-value">WIN ?</div>
-                <div class="stat-label">Gujarat </div>
-            </div>
-            <div class="stat">
-                <div class="stat-value">WIN ?</div>
-                <div class="stat-label">Mumbai</div>
-            </div>
-        </div>
-    </div>
-    <form style="margin-left: 30px;"><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QBhdK4eIrYgvFI" async> </script> </form>
-</div>
-
-<div class="prediction-cards" style="margin: 20px ; padding: 10px;">
-    <div id="slot-container" style="background: #ff0000; color: white; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; margin-top: 10px;">
-        ⚡ Only <span id="slot-count">5</span> Slots Left for This Prediction!
-    </div>
-    
 
 <!-- Hero Section -->
 <section class="hero">
+
+    <div class="hero-content">
+        <h1> Latest News IPL Results Are Leaked 😱</h1>
+        <p>🚨 WARNING! This information is highly confidential.</p>
+        <h2 style=" padding: 5px;">  Only limited users can access today’s match winner.</h2>
+        
+        <button style="margin: 20px; padding: 15px;" class="cta-button "><form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QBhdK4eIrYgvFI" async> </script> </form></button>
+    </a>
+    </div>
+    <div class="canvas-container" id="stadium-model"></div>
     <div style="background: #222; color: white; padding: 15px; border-radius: 10px; text-align: center; margin-top: 10px;">
         <h3 style="color: #ffcc00;">⭐ 4.9 Rating Based on 5,000+ Reviews</h3>
         <p>"Bro, last match ki prediction 100% sahi thi! Trustworthy site!" – <b>Amit, Delhi</b></p>
@@ -1004,13 +995,55 @@ function showPayment() {
             <p class="section-subtitle">⚠️ Highly Confidential Data  Limited Users Only!</p>
         </div>
 
-
-
-
+        <div class="prediction-cards">
+            <div id="slot-container" style="background: #ff0000; color: white; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; margin-top: 10px;">
+                ⚡ Only <span id="slot-count">5</span> Slots Left for This Prediction!
+            </div>
+            
+            <script>
+                let slotsLeft = 10; // Initial Slots
+            
+                function decreaseSlots() {
+                    if (slotsLeft > 0) {
+                        slotsLeft--; 
+                        document.getElementById("slot-count").innerText = slotsLeft;
+            
+                        if (slotsLeft === 0) {
+                            document.getElementById("slot-container").innerHTML = "⚠ Hurry! Next Prediction Coming Soon...";
+                        }
+                    }
+                }
+            
+                // ✅ Auto decrease every 10 seconds (Adjust timing as needed)
+                setInterval(decreaseSlots, 10000);
+            </script>
+<h1 style="text-align: center; background: #ffeb99; color: #333; padding: 8px 0; border-radius: 3px; font-size: 24px; font-weight: bold; width:100%; margin: 20px auto; border: 2px solid #ffcc00;">
+    Today’s Result
+</h1>
 
 
            
+            <div class="prediction-card blurred">
+                <div style="text-align: center; background: #f0f8ff; color: #222; padding: 5px 10px; border-radius: 3px; font-size: 16px; font-weight: bold; width: fit-content; margin: 10px auto; border: 1px solid #87ceeb;">
+    29 March |Saturday
+</div>
 
+                <div class="prediction-image" style="background-image: url('https://imgs.search.brave.com/8ugveHvrQsOso6g86Lr3jnPdbHWy5Dq5fB1WprWYxZQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXVtYmFpaW5kaWFu/cy5jb20vc3RhdGlj/LWFzc2V0cy93YWYt/aW1hZ2VzLzhkLzNk/LzZlLzE2LTkvNTky/LTQ0NC90U1ZjMGh3/MndPLnBuZw')"></div>
+                <div class="prediction-content">
+                    <h3>GT VS MI</h3>
+                    <div class="prediction-stats">
+                        <div class="stat">
+                            <div class="stat-value">WIN ?</div>
+                            <div class="stat-label">Gujarat </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">WIN ?</div>
+                            <div class="stat-label">Mumbai</div>
+                        </div>
+                    </div>
+                </div>
+                <form style="margin-left: 30px;"><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QBhdK4eIrYgvFI" async> </script> </form>
+            </div>
             <div style="text-align: center; background: #d9edf7; color: #333; padding: 8px 0; border-radius: 3px; font-size: 22px; font-weight: bold; width:100%; margin: 20px auto; border: 2px solid #99cfe0;">
                 Previous Results
             </div>
