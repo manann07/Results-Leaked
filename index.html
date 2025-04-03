@@ -949,8 +949,57 @@ footer {
             </div>
         </div>
     </div>
-    <form style="text-align: center;"><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QDVoLErZVopB45" async> </script> </form>
+    <div style="text-align: center; margin: 15px;">
+        <div class="unlock-text" style="font-size: 14.5px; font-weight: bold; margin-bottom: 12px;">
+            ⬇️ Click Below to Reveal the Winner ⬇️
+        </div>
+        <form>
+            <script src="https://checkout.razorpay.com/v1/payment-button.js" 
+                    data-payment_button_id="pl_QDVoLErZVopB45" async> 
+            </script>
+        </form>
+    </div>
+    
+    <style>
+    .unlock-text {
+        transition: color 0.1s ease;
+        color: rgb(255, 0, 150);
+    }
+    </style>
+    
+    <script>
+    window.addEventListener('scroll', function() {
+        const unlockText = document.querySelector('.unlock-text');
+        const scrollPosition = window.scrollY;
+        const maxScroll = document.body.scrollHeight - window.innerHeight;
+        const scrollPercentage = Math.min(scrollPosition / maxScroll, 1);
+    
+        // Rapid color transition with gradient effect
+        const red = Math.floor(255 * Math.abs(Math.sin(scrollPercentage * Math.PI * 4)));
+        const green = Math.floor(255 * Math.abs(Math.cos(scrollPercentage * Math.PI * 4)));
+        const blue = Math.floor(255 * Math.abs(Math.sin(scrollPercentage * Math.PI * 2)));
+    
+        unlockText.style.color = `rgb(${red}, ${green}, ${blue})`;
+    });
+    </script>
+    
+    
 </div>
+<div style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 8px 0; border-radius: 5px; margin: 10px auto; width: 100%; overflow: hidden;">
+    <marquee behavior="scroll" direction="left" style="font-size: 18px; font-weight: bold; animation: smoothSlide 3s linear infinite;">
+        ⚡• केवल ₹19 में पाएं जीत की गारंटी •
+         Get the winning guarantee for just ₹19 •⚡
+    </marquee>
+</div>
+
+<style>
+@keyframes smoothSlide {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+}
+</style>
+
 
 <div style="text-align: center; background: linear-gradient(135deg, #2c3e50, #1a2a3d); color: white; padding: 15px 25px; border-radius: 10px; font-size: 18px; font-weight: bold; width: fit-content; margin: 40px auto; border: 2px solid #1a2a3d; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); line-height: 1.5; text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4; animation: glow-animation 2s ease-in-out infinite alternate;">
     🔓 How To Unlock The Winner ⬇️ <br>
